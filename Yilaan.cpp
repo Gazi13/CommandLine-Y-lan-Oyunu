@@ -2,7 +2,7 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-BU KOD ALINTIDIR SADECE TÜRKÇE YORUM EKLENMİŞTİR.
+BU KOD ALINTIDIR SADECE TÃœRKÃ‡E YORUM EKLENMMISTIR.
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -70,7 +70,7 @@ struct sSnakeSegment
 
 int main()
 {
-	// Create Screen Buffer - Ekrana yazma işlemi için
+	// Create Screen Buffer - Ekrana yazma iÃ¾lemi iÃ§in
 	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight];
 	for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
 	HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -79,29 +79,29 @@ int main()
 
 	while (1)
 	{
-		// Oyunu Başlat - Sıfırla
+		// Oyunu BaÃ¾lat - SÃ½fÃ½rla
 
-		list<sSnakeSegment> snake = { {60,15},{61,15},{62,15},{63,15},{64,15},{65,15},{66,15},{67,15},{68,15},{69,15} };//Yılanın ilk konumu
+		list<sSnakeSegment> snake = { {60,15},{61,15},{62,15},{63,15},{64,15},{65,15},{66,15},{67,15},{68,15},{69,15} };//YÃ½lanÃ½n ilk konumu
 		int nFoodX = 30;//Yem konumu
 		int nFoodY = 15;
 		int nScore = 0;
-		int nSnakeDirection = 3; // 0-1-2-3 olarak her yön bir sayı ile ifade ediliyor.
+		int nSnakeDirection = 3; // 0-1-2-3 olarak her yÃ¶n bir sayÃ½ ile ifade ediliyor.
 		bool bDead = false;
-		bool bKeyLeft = false, bKeyRight = false, bKeyLeftOld = false, bKeyRightOld = false; // Hareket yönünün değiştiğini anlamak için eskisini tutuyoruz.
+		bool bKeyLeft = false, bKeyRight = false, bKeyLeftOld = false, bKeyRightOld = false; // Hareket yÃ¶nÃ¼nÃ¼n deÃ°iÃ¾tiÃ°ini anlamak iÃ§in eskisini tutuyoruz.
 
 		while (!bDead)
 		{
 			// Frame Timing, compensate for aspect ratio of command line
-			// Konsolda yatay ile dikeyde hareket hızı farkını önlemek için yöne göre geçikme süresini değiştiriyoruz.
+			// Konsolda yatay ile dikeyde hareket hÃ½zÃ½ farkÃ½nÃ½ Ã¶nlemek iÃ§in yÃ¶ne gÃ¶re geÃ§ikme sÃ¼resini deÃ°iÃ¾tiriyoruz.
 			auto t1 = chrono::system_clock::now();
 			while ((chrono::system_clock::now() - t1) < ((nSnakeDirection % 2 == 1) ? 120ms : 200ms))
 			{
 				// Get Input,
-				//Sağ-Sol tuşlarını alıyoruz.
+				//SaÃ°-Sol tuÃ¾larÃ½nÃ½ alÃ½yoruz.
 				bKeyRight = (0x8000 & GetAsyncKeyState((unsigned char)('\x27'))) != 0;
 				bKeyLeft = (0x8000 & GetAsyncKeyState((unsigned char)('\x25'))) != 0;
 
-				// Yön 0-1-2-3-0-1-2-3 şeklinde 0-3 arası kalsın diye kontrol ediyoruz.
+				// YÃ¶n 0-1-2-3-0-1-2-3 Ã¾eklinde 0-3 arasÃ½ kalsÃ½n diye kontrol ediyoruz.
 				if (bKeyRight && !bKeyRightOld)
 				{
 					nSnakeDirection++;
@@ -121,16 +121,16 @@ int main()
 
 			// Update Snake Position, place a new head at the front of the list in the right direction
 
-			// Yılan kafansını hareket ettiriyoruz gideceği yöne göre.
+			// YÃ½lan kafansÃ½nÃ½ hareket ettiriyoruz gideceÃ°i yÃ¶ne gÃ¶re.
 			switch (nSnakeDirection)
 			{
-			case 0: // Yukarı
+			case 0: // YukarÃ½
 				snake.push_front({ snake.front().x, snake.front().y - 1 });
 				break;
-			case 1: // Sağ
+			case 1: // SaÃ°
 				snake.push_front({ snake.front().x + 1, snake.front().y });
 				break;
-			case 2: // Aşağı
+			case 2: // AÃ¾aÃ°Ã½
 				snake.push_front({ snake.front().x, snake.front().y + 1 });
 				break;
 			case 3: // Sol
@@ -138,11 +138,11 @@ int main()
 				break;
 			}
 
-			// Çarpışmalar      Yılan V Yem
+			// Ã‡arpÃ½Ã¾malar      YÃ½lan V Yem
 			if (snake.front().x == nFoodX && snake.front().y == nFoodY)
 			{
 				nScore++;
-				// Boş bir yere yeni yem koyuyoruz.
+				// BoÃ¾ bir yere yeni yem koyuyoruz.
 				while (screen[nFoodY * nScreenWidth + nFoodX] != L' ')
 				{
 					nFoodX = rand() % nScreenWidth;
@@ -153,54 +153,54 @@ int main()
 					snake.push_back({ snake.back().x, snake.back().y });
 			}
 
-		    // Çarpışmalar      Yılan V Ortam
+		    // Ã‡arpÃ½Ã¾malar      YÃ½lan V Ortam
 
 			if (snake.front().x < 0 || snake.front().x >= nScreenWidth)
 				bDead = true;
 			if (snake.front().y < 3 || snake.front().y >= nScreenHeight)
 				bDead = true;
 
-			// Çarpışmalar      Yılan V Yılan  (yılan kendine çarparsa)
+			// Ã‡arpÃ½Ã¾malar      YÃ½lan V YÃ½lan  (yÃ½lan kendine Ã§arparsa)
 			for (list<sSnakeSegment>::iterator i = snake.begin(); i != snake.end(); i++)
 				if (i != snake.begin() && i->x == snake.front().x && i->y == snake.front().y)
 					bDead = true;
 
-			// Yılanın kuyruğundan siliyoruz
+			// YÃ½lanÃ½n kuyruÃ°undan siliyoruz
 			snake.pop_back();
 
 	
 
-			// Ekranı Temizle
+			// EkranÃ½ Temizle
 			for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
 
-			// Üst menü çizimi
+			// Ãœst menÃ¼ Ã§izimi
 			for (int i = 0; i < nScreenWidth; i++)
 			{
 				screen[i] = L'=';
 				screen[2 * nScreenWidth + i] = L'=';
 			}
-			wsprintf(&screen[nScreenWidth + 5], L"www.OneLoneCoder.com - S N A K E ! !   Bu Kod Alıntıdır.    SCORE: %d", nScore);
+			wsprintf(&screen[nScreenWidth + 5], L"www.OneLoneCoder.com - S N A K E ! !   Bu Kod AlÃ½ntÃ½dÃ½r.    SCORE: %d", nScore);
 
 
-			// Yılanı çiziyoruz
+			// YÃ½lanÃ½ Ã§iziyoruz
 			for (auto s : snake)
 				screen[s.y * nScreenWidth + s.x] = bDead ? L'+' : L'O';
 
-			// Yılanın başını çiziyoruz
+			// YÃ½lanÃ½n baÃ¾Ã½nÃ½ Ã§iziyoruz
 			screen[snake.front().y * nScreenWidth + snake.front().x] = bDead ? L'X' : L'@';
 
 			// Yem 
 			screen[nFoodY * nScreenWidth + nFoodX] = L'%';
 
-			// Eğer ölürse oyun duruyor boşluk tuşunu bekliyoruz.
+			// EÃ°er Ã¶lÃ¼rse oyun duruyor boÃ¾luk tuÃ¾unu bekliyoruz.
 			if (bDead)
 				wsprintf(&screen[15 * nScreenWidth + 40], L"    PRESS 'SPACE' TO PLAY AGAIN    ");
 
-			// Ekrana basıyoruz.
+			// Ekrana basÃ½yoruz.
 			WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0,0 }, &dwBytesWritten);
 		}
 
-		// Boşluk tuşunu bekle 
+		// BoÃ¾luk tuÃ¾unu bekle 
 		while ((0x8000 & GetAsyncKeyState((unsigned char)('\x20'))) == 0);
 	}
 
